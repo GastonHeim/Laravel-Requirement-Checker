@@ -22,8 +22,16 @@ $requirements['php_version'] = (version_compare(PHP_VERSION,"5.3.7",">=") >= 0);
 // MCrypt PHP Extension
 $requirements['mcrypt_enabled'] = extension_loaded("mcrypt");
 
-// Fileinfo PHP Extension
-$requirements['fileinfo_enabled'] = extension_loaded("fileinfo");
+// MimeTypeGuesser:
+$requirements['MimeTypeGuesser_isSupported'] = false;
+
+# FileinfoMimeTypeGuesser
+$requirements['MimeTypeGuesser_isSupported'] = function_exists('finfo_open');
+
+# FileBinaryMimeTypeGuesser
+if (!$requirements['MimeTypeGuesser_isSupported']) {
+    $requirements['MimeTypeGuesser_isSupported'] = !defined('PHP_WINDOWS_VERSION_BUILD') && function_exists('passthru') && function_exists('escapeshellarg'); 
+}
 
 // mod_rewrite
 $requirements['mod_rewrite_enabled'] = null;
@@ -93,8 +101,8 @@ if ( function_exists('apache_get_modules') )
         <h2>Optional Server Requirements.</h2>
 
         <p>
-            Fileinfo PHP Extension <?php echo $requirements['fileinfo_enabled'] ? $strOk : $strFail; ?>
-            <small>Required for MIME-type validation</small>
+            MimeTypeGuesser is Supported <?php echo $requirements['MimeTypeGuesser_isSupported'] ? $strOk : $strFail; ?>
+            <small>Requires finfo_open() or passthru() and escapeshellarg()</small>
         </p>
 
         <?php 
