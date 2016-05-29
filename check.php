@@ -17,13 +17,19 @@ $strUnknown = '<i class="icon-question"></i>';
 $requirements = array();
 
 // PHP Version
-$requirements['php_version'] = (version_compare(PHP_VERSION,"5.3.7",">=") >= 0);
+$requirements['php_version'] = (version_compare(PHP_VERSION,"5.5.9",">=") >= 0);
 
-// MCrypt PHP Extension
-$requirements['mcrypt_enabled'] = extension_loaded("mcrypt");
+// OpenSSL PHP Extension
+$requirements['openssl_enabled'] = extension_loaded("openssl");
 
-// Fileinfo PHP Extension
-$requirements['fileinfo_enabled'] = extension_loaded("fileinfo");
+// PDO PHP Extension
+$requirements['pdo_enabled'] = defined('PDO::ATTR_DRIVER_NAME');
+
+// Mbstring PHP Extension
+$requirements['mbstring_enabled'] = extension_loaded("mbstring");
+
+// Tokenizer PHP Extension
+$requirements['tokenizer_enabled'] = extension_loaded("tokenizer");
 
 // mod_rewrite
 $requirements['mod_rewrite_enabled'] = null;
@@ -83,33 +89,23 @@ if ( function_exists('apache_get_modules') )
         <h1>Server Requirements.</h1>
 
         <p>
-            PHP >= 5.3.7 <?php echo $requirements['php_version'] ? $strOk : $strFail; ?>
+            PHP >= 5.5.9 <?php echo $requirements['php_version'] ? $strOk : $strFail; ?>
         </p>
 
         <p>
-            MCrypt PHP Extension <?php echo $requirements['mcrypt_enabled'] ? $strOk : $strFail; ?>
+            OpenSSL PHP Extension <?php echo $requirements['openssl_enabled'] ? $strOk : $strFail; ?>
         </p>
 
-        <h2>Optional Server Requirements.</h2>
-
         <p>
-            Fileinfo PHP Extension <?php echo $requirements['fileinfo_enabled'] ? $strOk : $strFail; ?>
-            <small>Required for MIME-type validation</small>
+            PDO PHP Extension <?php echo $requirements['pdo_enabled'] ? $strOk : $strFail; ?>
         </p>
 
-        <?php 
-
-        // mod_rewrite Module
-        $strModRewriteEnabled = $strUnknown;
-
-        if (isset($requirements['mod_rewrite_enabled'])) {
-            $strModRewriteEnabled = $requirements['mod_rewrite_enabled'] ? $strOk : $strFail;
-        }
-
-        ?>
         <p>
-            mod_rewrite Module <?php echo $strModRewriteEnabled; ?>
-            <small>Required for Pretty URLs</small>
+            Mbstring PHP Extension <?php echo $requirements['mbstring_enabled'] ? $strOk : $strFail; ?>
+        </p>
+
+        <p>
+            Tokenizer PHP Extension <?php echo $requirements['tokenizer_enabled'] ? $strOk : $strFail; ?>
         </p>
     </div>
 </body>
