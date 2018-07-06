@@ -132,7 +132,7 @@ $requirements = array();
 
 
 // PHP Version
-$requirements['php_version'] = (version_compare(PHP_VERSION, $reqList[$laravelVersion]['php'], ">=") >= 0);
+$requirements['php_version'] = version_compare(PHP_VERSION, $reqList[$laravelVersion]['php'], ">=");
 
 // OpenSSL PHP Extension
 $requirements['openssl_enabled'] = extension_loaded("openssl");
