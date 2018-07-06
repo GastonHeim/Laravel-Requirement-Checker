@@ -62,7 +62,10 @@ $reqList = array(
         'obs' => ''
     ),
     '5.2' => array(
-        'php' => '5.5.9',
+        'php' => array(
+            '>=' => '5.5.9',
+            '<' => '7.2.0',
+        ),
         'mcrypt' => false,
         'openssl' => true,
         'pdo' => true,
@@ -74,7 +77,10 @@ $reqList = array(
         'obs' => ''
     ),
     '5.3' => array(
-        'php' => '5.6.4',
+        'php' => array(
+            '>=' => '5.6.4',
+            '<' => '7.2.0',
+        ),
         'mcrypt' => false,
         'openssl' => true,
         'pdo' => true,
@@ -98,7 +104,7 @@ $reqList = array(
         'obs' => ''
     ),
     '5.5' => array(
-        'php' => '5.6.4',
+        'php' => '7.0.0',
         'mcrypt' => false,
         'openssl' => true,
         'pdo' => true,
@@ -132,7 +138,17 @@ $requirements = array();
 
 
 // PHP Version
-$requirements['php_version'] = version_compare(PHP_VERSION, $reqList[$laravelVersion]['php'], ">=");
+if (is_array($reqList[$laravelVersion]['php'])) {
+    $requirements['php_version'] = true;
+    foreach ($reqList[$laravelVersion]['php'] as $operator => $version) {
+        if ( ! version_compare(PHP_VERSION, $version, $operator)) {
+            $requirements['php_version'] = false;
+            break;
+        }
+    }
+}else{
+    $requirements['php_version'] = version_compare(PHP_VERSION, $reqList[$laravelVersion]['php'], ">=");    
+}
 
 // OpenSSL PHP Extension
 $requirements['openssl_enabled'] = extension_loaded("openssl");
@@ -244,8 +260,18 @@ if (function_exists('apache_get_modules')) {
     <h1>Server Requirements.</h1>
 
     <p>
-        PHP
-        >= <?php echo $reqList[$laravelVersion]['php'] ?> <?php echo $requirements['php_version'] ? $strOk : $strFail; ?>
+        PHP <?php
+        if (is_array($reqList[$laravelVersion]['php'])) {
+            $phpVersions = array();
+            foreach ($reqList[$laravelVersion]['php'] as $operator => $version) {
+                $phpVersions[] = "{$operator} {$version}";
+            }
+            echo implode(" && ", $phpVersions);
+        }else{
+            echo ">= " . $reqList[$laravelVersion]['php'];
+        }
+
+        echo " " . $requirements['php_version'] ? $strOk : $strFail; ?>
     </p>
 
 
