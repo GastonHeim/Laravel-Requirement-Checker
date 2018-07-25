@@ -271,7 +271,7 @@ if (function_exists('apache_get_modules')) {
             echo ">= " . $reqList[$laravelVersion]['php'];
         }
 
-        echo " " . $requirements['php_version'] ? $strOk : $strFail; ?>
+        echo " " . ($requirements['php_version'] ? $strOk : $strFail); ?>
     </p>
 
 
