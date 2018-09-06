@@ -10,18 +10,18 @@
  * @author Emerson Carvalho
  * @version 0.0.1
  */
-$latestLaravelVersion = '5.6';
+$latestLaravelVersion = '5.7';
 
 $laravelVersion = (isset($_GET['v'])) ? (string)$_GET['v'] : $latestLaravelVersion;
 
-if (!in_array($laravelVersion, array('4.2', '5.0', '5.1', '5.2', '5.3', '5.4', '5.5', '5.6'))) {
+if (!in_array($laravelVersion, array('4.2', '5.0', '5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7'))) {
     $laravelVersion = $latestLaravelVersion;
 }
 
 
-$laravel42Obs = 'As of PHP 5.5, some OS distributions may require you to manually install the PHP JSON extension. 
+$laravel42Obs = 'As of PHP 5.5, some OS distributions may require you to manually install the PHP JSON extension.
 When using Ubuntu, this can be done via apt-get install php5-json.';
-$laravel50Obs = 'PHP version should be < 7. As of PHP 5.5, some OS distributions may require you to manually install the PHP JSON extension. 
+$laravel50Obs = 'PHP version should be < 7. As of PHP 5.5, some OS distributions may require you to manually install the PHP JSON extension.
 When using Ubuntu, this can be done via apt-get install php5-json';
 
 $reqList = array(
@@ -127,6 +127,18 @@ $reqList = array(
         'json' => true,
         'obs' => ''
     ),
+    '5.7' => array(
+        'php' => '7.1.3',
+        'mcrypt' => false,
+        'openssl' => true,
+        'pdo' => true,
+        'mbstring' => true,
+        'tokenizer' => true,
+        'xml' => true,
+        'ctype' => true,
+        'json' => true,
+        'obs' => ''
+    ),
 );
 
 
@@ -147,7 +159,7 @@ if (is_array($reqList[$laravelVersion]['php'])) {
         }
     }
 }else{
-    $requirements['php_version'] = version_compare(PHP_VERSION, $reqList[$laravelVersion]['php'], ">=");    
+    $requirements['php_version'] = version_compare(PHP_VERSION, $reqList[$laravelVersion]['php'], ">=");
 }
 
 // OpenSSL PHP Extension
@@ -246,7 +258,8 @@ if (function_exists('apache_get_modules')) {
 
     <form action="?" method="get"/>
     <select name="v" onchange="this.form.submit()">
-        <option value="5.6" <?php echo ($laravelVersion == '5.6') ? 'selected' : '' ?> >Laravel 5.6 Latest</option>
+        <option value="5.7" <?php echo ($laravelVersion == '5.7') ? 'selected' : '' ?> >Laravel 5.7 Latest</option>
+        <option value="5.6" <?php echo ($laravelVersion == '5.6') ? 'selected' : '' ?> >Laravel 5.6</option>
         <option value="5.5" <?php echo ($laravelVersion == '5.5') ? 'selected' : '' ?> >Laravel 5.5 LTS</option>
         <option value="5.4" <?php echo ($laravelVersion == '5.4') ? 'selected' : '' ?> >Laravel 5.4</option>
         <option value="5.3" <?php echo ($laravelVersion == '5.3') ? 'selected' : '' ?> >Laravel 5.3</option>
