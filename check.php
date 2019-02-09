@@ -143,7 +143,7 @@ $reqList = array(
 
 
 $strOk = '<i class="fa fa-check"></i>';
-$strFail = '<i class="fa fa-times"></i>';
+$strFail = '<i style="color: red" class="fa fa-times"></i>';
 $strUnknown = '<i class="fa fa-question"></i>';
 
 $requirements = array();
@@ -285,6 +285,7 @@ if (function_exists('apache_get_modules')) {
         }
 
         echo " " . ($requirements['php_version'] ? $strOk : $strFail); ?>
+        (<?php echo PHP_VERSION; ?>)
     </p>
 
 
@@ -320,10 +321,16 @@ if (function_exists('apache_get_modules')) {
     <?php if ($reqList[$laravelVersion]['mcrypt']) : ?>
         <p>Mcrypt PHP Extension <?php echo $requirements['mcrypt_enabled'] ? $strOk : $strFail; ?></p>
     <?php endif ?>
-
+    
     <?php if (!empty($reqList[$laravelVersion]['obs'])): ?>
         <p class="obs"><?php echo $reqList[$laravelVersion]['obs'] ?></p>
     <?php endif; ?>
+    
+    
+    <p>magic_quotes_gpc: <?php echo !ini_get('magic_quotes_gpc') ? $strOk : $strFail; ?> (value: <?php echo ini_get('magic_quotes_gpc') ?>)</p>
+    <p>register_globals: <?php echo !ini_get('register_globals') ? $strOk : $strFail; ?> (value: <?php echo ini_get('register_globals') ?>)</p>
+    <p>session.auto_start: <?php echo !ini_get('session.auto_start') ? $strOk : $strFail; ?> (value: <?php echo ini_get('session.auto_start') ?>)</p>
+    <p>mbstring.func_overload: <?php echo !ini_get('mbstring.func_overload') ? $strOk : $strFail; ?> (value: <?php echo ini_get('mbstring.func_overload') ?>)</p>
 
 </div>
 </body>
