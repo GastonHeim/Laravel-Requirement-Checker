@@ -10,7 +10,7 @@
  * @author Emerson Carvalho
  * @version 0.0.1
  */
-$latestLaravelVersion = '7.0';
+$latestLaravelVersion = '8.0';
 
 $laravelVersion = (isset($_GET['v'])) ? (string)$_GET['v'] : $latestLaravelVersion;
 
@@ -177,6 +177,19 @@ $reqList = array(
         'bcmath' => true,
         'obs' => ''
     ),
+    '8.0' => array(
+        'php' => '7.3.0',
+        'mcrypt' => false,
+        'openssl' => true,
+        'pdo' => true,
+        'mbstring' => true,
+        'tokenizer' => true,
+        'xml' => true,
+        'ctype' => true,
+        'json' => true,
+        'bcmath' => true,
+        'obs' => ''
+    ),
 );
 
 
@@ -306,18 +319,19 @@ if (function_exists('apache_get_modules')) {
 
     <form action="?" method="get">
         <select name="v" onchange="this.form.submit()">
-            <option value="7.0" <?php echo ($laravelVersion == '7.0') ? 'selected' : '' ?> >Laravel 7.0 - Latest</option>
-            <option value="6.0" <?php echo ($laravelVersion == '6.0') ? 'selected' : '' ?> >Laravel 6.0 LTS</option>
-            <option value="5.8" <?php echo ($laravelVersion == '5.8') ? 'selected' : '' ?> >Laravel 5.8</option>
-            <option value="5.7" <?php echo ($laravelVersion == '5.7') ? 'selected' : '' ?> >Laravel 5.7</option>
-            <option value="5.6" <?php echo ($laravelVersion == '5.6') ? 'selected' : '' ?> >Laravel 5.6</option>
-            <option value="5.5" <?php echo ($laravelVersion == '5.5') ? 'selected' : '' ?> >Laravel 5.5 LTS</option>
-            <option value="5.4" <?php echo ($laravelVersion == '5.4') ? 'selected' : '' ?> >Laravel 5.4</option>
-            <option value="5.3" <?php echo ($laravelVersion == '5.3') ? 'selected' : '' ?> >Laravel 5.3</option>
-            <option value="5.2" <?php echo ($laravelVersion == '5.2') ? 'selected' : '' ?> >Laravel 5.2</option>
-            <option value="5.1" <?php echo ($laravelVersion == '5.1') ? 'selected' : '' ?> >Laravel 5.1 LTS</option>
-            <option value="5.0" <?php echo ($laravelVersion == '5.0') ? 'selected' : '' ?> >Laravel 5.0</option>
-            <option value="4.2" <?php echo ($laravelVersion == '4.2') ? 'selected' : '' ?> >Laravel 4.2</option>
+            <option value="8.0" <?php echo ($laravelVersion === '8.0') ? 'selected' : '' ?> >Laravel 8.0 - Latest</option>
+            <option value="7.0" <?php echo ($laravelVersion === '7.0') ? 'selected' : '' ?> >Laravel 7.0</option>
+            <option value="6.0" <?php echo ($laravelVersion === '6.0') ? 'selected' : '' ?> >Laravel 6.0 LTS</option>
+            <option value="5.8" <?php echo ($laravelVersion === '5.8') ? 'selected' : '' ?> >Laravel 5.8</option>
+            <option value="5.7" <?php echo ($laravelVersion === '5.7') ? 'selected' : '' ?> >Laravel 5.7</option>
+            <option value="5.6" <?php echo ($laravelVersion === '5.6') ? 'selected' : '' ?> >Laravel 5.6</option>
+            <option value="5.5" <?php echo ($laravelVersion === '5.5') ? 'selected' : '' ?> >Laravel 5.5 LTS</option>
+            <option value="5.4" <?php echo ($laravelVersion === '5.4') ? 'selected' : '' ?> >Laravel 5.4</option>
+            <option value="5.3" <?php echo ($laravelVersion === '5.3') ? 'selected' : '' ?> >Laravel 5.3</option>
+            <option value="5.2" <?php echo ($laravelVersion === '5.2') ? 'selected' : '' ?> >Laravel 5.2</option>
+            <option value="5.1" <?php echo ($laravelVersion === '5.1') ? 'selected' : '' ?> >Laravel 5.1 LTS</option>
+            <option value="5.0" <?php echo ($laravelVersion === '5.0') ? 'selected' : '' ?> >Laravel 5.0</option>
+            <option value="4.2" <?php echo ($laravelVersion === '4.2') ? 'selected' : '' ?> >Laravel 4.2</option>
         </select>
     </form>
 
@@ -331,7 +345,7 @@ if (function_exists('apache_get_modules')) {
                 $phpVersions[] = "{$operator} {$version}";
             }
             echo implode(" && ", $phpVersions);
-        }else{
+        } else {
             echo ">= " . $reqList[$laravelVersion]['php'];
         }
 
@@ -390,4 +404,3 @@ if (function_exists('apache_get_modules')) {
 </div>
 </body>
 </html>
-
