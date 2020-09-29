@@ -262,7 +262,7 @@ if (function_exists('apache_get_modules')) {
             margin: 0;
             font-size: 16px;
             font-family: 'Lato', sans-serif;
-            text-align: center;
+            text-align: left;
             color: #999;
         }
 
