@@ -1,14 +1,11 @@
-Laravel-Requirement-Checker
+Laravel-Checker-Indo
 ===========================
-
-Standalone script to check if a server meets the requirements for running the Laravel framework.
-
-Use
----
-
-Place the check.php file into the web server and open it with your browser.
-
-Notes
------
-
-Part of the code was taken from Laravel default view and Yii Framework Requirement Checker script.
+Script ini diambil dari 
+https://github.com/GastonHeim/Laravel-Requirement-Checker
+ 
+ * @author Gastón Heim
+ * @author Emerson Carvalho
+ * @version 0.0.1
+ 
+ Ubah sesuai dengan bahasa indonesia literasi by Racode 
+ 
