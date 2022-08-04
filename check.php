@@ -74,7 +74,8 @@ $reqList = array(
         'xml' => false,
         'ctype' => false,
         'json' => false,
-        'obs' => ''
+        'obs' => '',
+        'bolt' => true
     ),
     '5.3' => array(
         'php' => array(
@@ -89,7 +90,8 @@ $reqList = array(
         'xml' => true,
         'ctype' => false,
         'json' => false,
-        'obs' => ''
+        'obs' => '',
+        'bolt' => true
     ),
     '5.4' => array(
         'php' => '5.6.4',
@@ -101,7 +103,8 @@ $reqList = array(
         'xml' => true,
         'ctype' => false,
         'json' => false,
-        'obs' => ''
+        'obs' => '',
+        'bolt' => true
     ),
     '5.5' => array(
         'php' => '7.0.0',
@@ -113,7 +116,8 @@ $reqList = array(
         'xml' => true,
         'ctype' => false,
         'json' => false,
-        'obs' => ''
+        'obs' => '',
+        'bolt' => true
     ),
     '5.6' => array(
         'php' => '7.1.3',
@@ -125,7 +129,8 @@ $reqList = array(
         'xml' => true,
         'ctype' => true,
         'json' => true,
-        'obs' => ''
+        'obs' => '',
+        'bolt' => true
     ),
     '5.7' => array(
         'php' => '7.1.3',
@@ -137,7 +142,8 @@ $reqList = array(
         'xml' => true,
         'ctype' => true,
         'json' => true,
-        'obs' => ''
+        'obs' => '',
+        'bolt' => true
     ),
     '5.8' => array(
         'php' => '7.1.3',
@@ -149,7 +155,8 @@ $reqList = array(
         'xml' => true,
         'ctype' => true,
         'json' => true,
-        'obs' => ''
+        'obs' => '',
+        'bolt' => true
     ),
     '6.0' => array(
         'php' => '7.2.0',
@@ -162,7 +169,8 @@ $reqList = array(
         'ctype' => true,
         'json' => true,
         'bcmath' => true,
-        'obs' => ''
+        'obs' => '',
+        'bolt' => true
     ),
     '7.0' => array(
         'php' => '7.2.5',
@@ -175,7 +183,8 @@ $reqList = array(
         'ctype' => true,
         'json' => true,
         'bcmath' => true,
-        'obs' => ''
+        'obs' => '',
+        'bolt' => true
     ),
     '8.0' => array(
         'php' => '7.3.0',
@@ -188,7 +197,8 @@ $reqList = array(
         'ctype' => true,
         'json' => true,
         'bcmath' => true,
-        'obs' => ''
+        'obs' => '',
+        'bolt' => true
     ),
 );
 
@@ -204,12 +214,12 @@ $requirements = array();
 if (is_array($reqList[$laravelVersion]['php'])) {
     $requirements['php_version'] = true;
     foreach ($reqList[$laravelVersion]['php'] as $operator => $version) {
-        if ( ! version_compare(PHP_VERSION, $version, $operator)) {
+        if (!version_compare(PHP_VERSION, $version, $operator)) {
             $requirements['php_version'] = false;
             break;
         }
     }
-}else{
+} else {
     $requirements['php_version'] = version_compare(PHP_VERSION, $reqList[$laravelVersion]['php'], ">=");
 }
 
@@ -240,6 +250,9 @@ $requirements['mcrypt_enabled'] = extension_loaded("mcrypt_encrypt");
 // BCMath
 $requirements['bcmath_enabled'] = extension_loaded("bcmath");
 
+//PHP Bolt
+$requirements['bolt_enabled'] = extension_loaded("bolt");
+
 // mod_rewrite
 $requirements['mod_rewrite_enabled'] = null;
 
@@ -251,6 +264,7 @@ if (function_exists('apache_get_modules')) {
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Server Requirements &dash; Laravel PHP Framework</title>
@@ -271,7 +285,7 @@ if (function_exists('apache_get_modules')) {
             margin: 50px auto;
         }
 
-        .logo{
+        .logo {
             display: block;
             text-decoration: none;
             margin-bottom: 20px;
@@ -311,96 +325,102 @@ if (function_exists('apache_get_modules')) {
         }
     </style>
 </head>
+
 <body>
-<div class="wrapper">
-    <a href="https://laravel.com" title="Laravel PHP Framework" class="logo">
-        <img class="mark" src="https://laravel.com/img/logomark.min.svg" alt="Laravel"><img class="type" src="https://laravel.com/img/logotype.min.svg" alt="Laravel">
-    </a>
+    <div class="wrapper">
+        <a href="https://laravel.com" title="Laravel PHP Framework" class="logo">
+            <img class="mark" src="https://laravel.com/img/logomark.min.svg" alt="Laravel"><img class="type" src="https://laravel.com/img/logotype.min.svg" alt="Laravel">
+        </a>
 
-    <form action="?" method="get">
-        <select name="v" onchange="this.form.submit()">
-            <option value="8.0" <?php echo ($laravelVersion === '8.0') ? 'selected' : '' ?> >Laravel 8.0 - Latest</option>
-            <option value="7.0" <?php echo ($laravelVersion === '7.0') ? 'selected' : '' ?> >Laravel 7.0</option>
-            <option value="6.0" <?php echo ($laravelVersion === '6.0') ? 'selected' : '' ?> >Laravel 6.0 LTS</option>
-            <option value="5.8" <?php echo ($laravelVersion === '5.8') ? 'selected' : '' ?> >Laravel 5.8</option>
-            <option value="5.7" <?php echo ($laravelVersion === '5.7') ? 'selected' : '' ?> >Laravel 5.7</option>
-            <option value="5.6" <?php echo ($laravelVersion === '5.6') ? 'selected' : '' ?> >Laravel 5.6</option>
-            <option value="5.5" <?php echo ($laravelVersion === '5.5') ? 'selected' : '' ?> >Laravel 5.5 LTS</option>
-            <option value="5.4" <?php echo ($laravelVersion === '5.4') ? 'selected' : '' ?> >Laravel 5.4</option>
-            <option value="5.3" <?php echo ($laravelVersion === '5.3') ? 'selected' : '' ?> >Laravel 5.3</option>
-            <option value="5.2" <?php echo ($laravelVersion === '5.2') ? 'selected' : '' ?> >Laravel 5.2</option>
-            <option value="5.1" <?php echo ($laravelVersion === '5.1') ? 'selected' : '' ?> >Laravel 5.1 LTS</option>
-            <option value="5.0" <?php echo ($laravelVersion === '5.0') ? 'selected' : '' ?> >Laravel 5.0</option>
-            <option value="4.2" <?php echo ($laravelVersion === '4.2') ? 'selected' : '' ?> >Laravel 4.2</option>
-        </select>
-    </form>
+        <form action="?" method="get">
+            <select name="v" onchange="this.form.submit()">
+                <option value="8.0" <?php echo ($laravelVersion === '8.0') ? 'selected' : '' ?>>Laravel 8.0 - Latest</option>
+                <option value="7.0" <?php echo ($laravelVersion === '7.0') ? 'selected' : '' ?>>Laravel 7.0</option>
+                <option value="6.0" <?php echo ($laravelVersion === '6.0') ? 'selected' : '' ?>>Laravel 6.0 LTS</option>
+                <option value="5.8" <?php echo ($laravelVersion === '5.8') ? 'selected' : '' ?>>Laravel 5.8</option>
+                <option value="5.7" <?php echo ($laravelVersion === '5.7') ? 'selected' : '' ?>>Laravel 5.7</option>
+                <option value="5.6" <?php echo ($laravelVersion === '5.6') ? 'selected' : '' ?>>Laravel 5.6</option>
+                <option value="5.5" <?php echo ($laravelVersion === '5.5') ? 'selected' : '' ?>>Laravel 5.5 LTS</option>
+                <option value="5.4" <?php echo ($laravelVersion === '5.4') ? 'selected' : '' ?>>Laravel 5.4</option>
+                <option value="5.3" <?php echo ($laravelVersion === '5.3') ? 'selected' : '' ?>>Laravel 5.3</option>
+                <option value="5.2" <?php echo ($laravelVersion === '5.2') ? 'selected' : '' ?>>Laravel 5.2</option>
+                <option value="5.1" <?php echo ($laravelVersion === '5.1') ? 'selected' : '' ?>>Laravel 5.1 LTS</option>
+                <option value="5.0" <?php echo ($laravelVersion === '5.0') ? 'selected' : '' ?>>Laravel 5.0</option>
+                <option value="4.2" <?php echo ($laravelVersion === '4.2') ? 'selected' : '' ?>>Laravel 4.2</option>
+            </select>
+        </form>
 
-    <h1>Server Requirements.</h1>
+        <h1>Server Requirements.</h1>
 
-    <p>
-        PHP <?php
-        if (is_array($reqList[$laravelVersion]['php'])) {
-            $phpVersions = array();
-            foreach ($reqList[$laravelVersion]['php'] as $operator => $version) {
-                $phpVersions[] = "{$operator} {$version}";
-            }
-            echo implode(" && ", $phpVersions);
-        } else {
-            echo ">= " . $reqList[$laravelVersion]['php'];
-        }
+        <p>
+            PHP <?php
+                if (is_array($reqList[$laravelVersion]['php'])) {
+                    $phpVersions = array();
+                    foreach ($reqList[$laravelVersion]['php'] as $operator => $version) {
+                        $phpVersions[] = "{$operator} {$version}";
+                    }
+                    echo implode(" && ", $phpVersions);
+                } else {
+                    echo ">= " . $reqList[$laravelVersion]['php'];
+                }
 
-        echo " " . ($requirements['php_version'] ? $strOk : $strFail); ?>
-        (<?php echo PHP_VERSION; ?>)
-    </p>
-
-
-    <?php if ($reqList[$laravelVersion]['openssl']) : ?>
-        <p>OpenSSL PHP Extension <?php echo $requirements['openssl_enabled'] ? $strOk : $strFail; ?></p>
-    <?php endif; ?>
-
-    <?php if ($reqList[$laravelVersion]['pdo']) : ?>
-        <p>PDO PHP Extension <?php echo $requirements['pdo_enabled'] ? $strOk : $strFail; ?></p>
-    <?php endif ?>
-
-    <?php if ($reqList[$laravelVersion]['mbstring']) : ?>
-        <p>Mbstring PHP Extension <?php echo $requirements['mbstring_enabled'] ? $strOk : $strFail; ?></p>
-    <?php endif ?>
-
-    <?php if ($reqList[$laravelVersion]['tokenizer']) : ?>
-        <p>Tokenizer PHP Extension <?php echo $requirements['tokenizer_enabled'] ? $strOk : $strFail; ?></p>
-    <?php endif ?>
+                echo " " . ($requirements['php_version'] ? $strOk : $strFail); ?>
+            (<?php echo PHP_VERSION; ?>)
+        </p>
 
 
-    <?php if ($reqList[$laravelVersion]['xml']) : ?>
-        <p>XML PHP Extension <?php echo $requirements['xml_enabled'] ? $strOk : $strFail; ?></p>
-    <?php endif ?>
+        <?php if ($reqList[$laravelVersion]['openssl']) : ?>
+            <p>OpenSSL PHP Extension <?php echo $requirements['openssl_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif; ?>
 
-    <?php if ($reqList[$laravelVersion]['ctype']) : ?>
-        <p>CTYPE PHP Extension <?php echo $requirements['ctype_enabled'] ? $strOk : $strFail; ?></p>
-    <?php endif ?>
+        <?php if ($reqList[$laravelVersion]['pdo']) : ?>
+            <p>PDO PHP Extension <?php echo $requirements['pdo_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
 
-    <?php if ($reqList[$laravelVersion]['json']) : ?>
-        <p>JSON PHP Extension <?php echo $requirements['json_enabled'] ? $strOk : $strFail; ?></p>
-    <?php endif ?>
+        <?php if ($reqList[$laravelVersion]['mbstring']) : ?>
+            <p>Mbstring PHP Extension <?php echo $requirements['mbstring_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
 
-    <?php if ($reqList[$laravelVersion]['mcrypt']) : ?>
-        <p>Mcrypt PHP Extension <?php echo $requirements['mcrypt_enabled'] ? $strOk : $strFail; ?></p>
-    <?php endif ?>
-
-    <?php if (isset($reqList[$laravelVersion]['bcmath']) && $reqList[$laravelVersion]['bcmath']) : ?>
-        <p>BCmath PHP Extension <?php echo $requirements['bcmath_enabled'] ? $strOk : $strFail; ?></p>
-    <?php endif ?>
-
-    <?php if (!empty($reqList[$laravelVersion]['obs'])): ?>
-        <p class="obs"><?php echo $reqList[$laravelVersion]['obs'] ?></p>
-    <?php endif; ?>
+        <?php if ($reqList[$laravelVersion]['tokenizer']) : ?>
+            <p>Tokenizer PHP Extension <?php echo $requirements['tokenizer_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
 
 
-    <p>magic_quotes_gpc: <?php echo !ini_get('magic_quotes_gpc') ? $strOk : $strFail; ?> (value: <?php echo ini_get('magic_quotes_gpc') ?>)</p>
-    <p>register_globals: <?php echo !ini_get('register_globals') ? $strOk : $strFail; ?> (value: <?php echo ini_get('register_globals') ?>)</p>
-    <p>session.auto_start: <?php echo !ini_get('session.auto_start') ? $strOk : $strFail; ?> (value: <?php echo ini_get('session.auto_start') ?>)</p>
-    <p>mbstring.func_overload: <?php echo !ini_get('mbstring.func_overload') ? $strOk : $strFail; ?> (value: <?php echo ini_get('mbstring.func_overload') ?>)</p>
+        <?php if ($reqList[$laravelVersion]['xml']) : ?>
+            <p>XML PHP Extension <?php echo $requirements['xml_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
 
-</div>
+        <?php if ($reqList[$laravelVersion]['ctype']) : ?>
+            <p>CTYPE PHP Extension <?php echo $requirements['ctype_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
+
+        <?php if ($reqList[$laravelVersion]['json']) : ?>
+            <p>JSON PHP Extension <?php echo $requirements['json_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
+
+        <?php if ($reqList[$laravelVersion]['mcrypt']) : ?>
+            <p>Mcrypt PHP Extension <?php echo $requirements['mcrypt_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
+
+        <?php if (isset($reqList[$laravelVersion]['bcmath']) && $reqList[$laravelVersion]['bcmath']) : ?>
+            <p>BCmath PHP Extension <?php echo $requirements['bcmath_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
+
+        <?php if (!empty($reqList[$laravelVersion]['obs'])) : ?>
+            <p class="obs"><?php echo $reqList[$laravelVersion]['obs'] ?></p>
+        <?php endif; ?>
+
+        <?php if (isset($reqList[$laravelVersion]['bolt']) && $reqList[$laravelVersion]['bolt']) : ?>
+            <p>PHP Bolt Extension <?php echo $requirements['bolt_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
+
+
+        <p>magic_quotes_gpc: <?php echo !ini_get('magic_quotes_gpc') ? $strOk : $strFail; ?> (value: <?php echo ini_get('magic_quotes_gpc') ?>)</p>
+        <p>register_globals: <?php echo !ini_get('register_globals') ? $strOk : $strFail; ?> (value: <?php echo ini_get('register_globals') ?>)</p>
+        <p>session.auto_start: <?php echo !ini_get('session.auto_start') ? $strOk : $strFail; ?> (value: <?php echo ini_get('session.auto_start') ?>)</p>
+        <p>mbstring.func_overload: <?php echo !ini_get('mbstring.func_overload') ? $strOk : $strFail; ?> (value: <?php echo ini_get('mbstring.func_overload') ?>)</p>
+
+    </div>
 </body>
+
 </html>
