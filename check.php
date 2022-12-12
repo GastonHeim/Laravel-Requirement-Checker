@@ -10,11 +10,12 @@
  * @author Emerson Carvalho
  * @version 0.0.1
  */
-$latestLaravelVersion = '8.0';
+
+$latestLaravelVersion = '9.0';
 
 $laravelVersion = (isset($_GET['v'])) ? (string)$_GET['v'] : $latestLaravelVersion;
 
-if (!in_array($laravelVersion, array('4.2', '5.0', '5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7', '5.8', '6.0', '7.0'))) {
+if (!in_array($laravelVersion, array('4.2', '5.0', '5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7', '5.8', '6.0', '7.0', '8.0'))) {
     $laravelVersion = $latestLaravelVersion;
 }
 
@@ -200,6 +201,22 @@ $reqList = array(
         'obs' => '',
         'bolt' => true
     ),
+    '9.0' => array(
+        'php' => '8.0.0',
+        'bcmath' => true,
+        'ctype' => true,
+        'curl' => true,
+        'dom' => true,
+        'fileinfo' => true,
+        'json' => true,
+        'mbstring' => true,
+        'openssl' => true,
+        'pcre' => true,
+        'pdo' => true,
+        'tokenizer' => true,
+        'xml' => true
+    ),
+
 );
 
 
@@ -250,8 +267,23 @@ $requirements['mcrypt_enabled'] = extension_loaded("mcrypt_encrypt");
 // BCMath
 $requirements['bcmath_enabled'] = extension_loaded("bcmath");
 
-//PHP Bolt
+// PHP Bolt
 $requirements['bolt_enabled'] = extension_loaded("bolt");
+
+// cURL PHP Extension
+$requirements['curl_enabled'] = extension_loaded("curl");
+
+// DOM PHP Extension
+$requirements['dom_enabled'] = extension_loaded("dom");
+
+// Fileinfo PHP Extension
+$requirements['fileinfo_enabled'] = extension_loaded("fileinfo");
+
+// PCRE PHP Extension
+$requirements['pcre_enabled'] = extension_loaded("pcre");
+
+
+
 
 // mod_rewrite
 $requirements['mod_rewrite_enabled'] = null;
@@ -334,7 +366,8 @@ if (function_exists('apache_get_modules')) {
 
         <form action="?" method="get">
             <select name="v" onchange="this.form.submit()">
-                <option value="8.0" <?php echo ($laravelVersion === '8.0') ? 'selected' : '' ?>>Laravel 8.0 - Latest</option>
+                <option value="9.0" <?php echo ($laravelVersion === '9.0') ? 'selected' : '' ?>>Laravel 9.0 - Latest</option>
+                <option value="8.0" <?php echo ($laravelVersion === '8.0') ? 'selected' : '' ?>>Laravel 8.0</option>
                 <option value="7.0" <?php echo ($laravelVersion === '7.0') ? 'selected' : '' ?>>Laravel 7.0</option>
                 <option value="6.0" <?php echo ($laravelVersion === '6.0') ? 'selected' : '' ?>>Laravel 6.0 LTS</option>
                 <option value="5.8" <?php echo ($laravelVersion === '5.8') ? 'selected' : '' ?>>Laravel 5.8</option>
@@ -368,7 +401,6 @@ if (function_exists('apache_get_modules')) {
             (<?php echo PHP_VERSION; ?>)
         </p>
 
-
         <?php if ($reqList[$laravelVersion]['openssl']) : ?>
             <p>OpenSSL PHP Extension <?php echo $requirements['openssl_enabled'] ? $strOk : $strFail; ?></p>
         <?php endif; ?>
@@ -384,7 +416,6 @@ if (function_exists('apache_get_modules')) {
         <?php if ($reqList[$laravelVersion]['tokenizer']) : ?>
             <p>Tokenizer PHP Extension <?php echo $requirements['tokenizer_enabled'] ? $strOk : $strFail; ?></p>
         <?php endif ?>
-
 
         <?php if ($reqList[$laravelVersion]['xml']) : ?>
             <p>XML PHP Extension <?php echo $requirements['xml_enabled'] ? $strOk : $strFail; ?></p>
@@ -414,6 +445,21 @@ if (function_exists('apache_get_modules')) {
             <p>PHP Bolt Extension <?php echo $requirements['bolt_enabled'] ? $strOk : $strFail; ?></p>
         <?php endif ?>
 
+        <?php if (isset($reqList[$laravelVersion]['curl']) && $reqList[$laravelVersion]['curl']) : ?>
+            <p>cURL PHP Extension <?php echo $requirements['curl_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
+
+        <?php if (isset($reqList[$laravelVersion]['dom']) && $reqList[$laravelVersion]['dom']) : ?>
+            <p>DOM PHP Extension <?php echo $requirements['dom_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
+
+        <?php if (isset($reqList[$laravelVersion]['fileinfo']) && $reqList[$laravelVersion]['fileinfo']) : ?>
+            <p>Fileinfo PHP Extension <?php echo $requirements['fileinfo_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
+
+        <?php if (isset($reqList[$laravelVersion]['pcre']) && $reqList[$laravelVersion]['pcre']) : ?>
+            <p>PCRE PHP Extension <?php echo $requirements['pcre_enabled'] ? $strOk : $strFail; ?></p>
+        <?php endif ?>
 
         <p>magic_quotes_gpc: <?php echo !ini_get('magic_quotes_gpc') ? $strOk : $strFail; ?> (value: <?php echo ini_get('magic_quotes_gpc') ?>)</p>
         <p>register_globals: <?php echo !ini_get('register_globals') ? $strOk : $strFail; ?> (value: <?php echo ini_get('register_globals') ?>)</p>
